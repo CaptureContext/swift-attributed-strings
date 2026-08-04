@@ -1,0 +1,678 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.25.4 clang-2100.3.25.1)
+// swift-module-flags: -target arm64-apple-macos12.0 -enable-objc-interop -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name AttributedStrings
+// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
+import AppKit
+import CoreGraphics
+import CoreText
+import Foundation
+import ObjectiveC
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import ObjectiveC.runtime
+public protocol ColorConvertible {
+  var color: AttributedStrings::Color { get }
+}
+extension AppKit::NSColor : AttributedStrings::ColorConvertible {
+  public var color: AttributedStrings::Color {
+    get
+  }
+  convenience public init(hexString: Swift::String)
+  convenience public init(hex: Swift::UInt32, useAlpha alphaChannel: Swift::Bool = false)
+}
+extension Swift::String : AttributedStrings::ColorConvertible {
+  public var color: AttributedStrings::Color {
+    get
+  }
+}
+public typealias Color = AppKit::NSColor
+public typealias Image = AppKit::NSImage
+public typealias Font = AppKit::NSFont
+public typealias FontDescriptor = AppKit::NSFontDescriptor
+public typealias SymbolicTraits = AppKit::NSFontDescriptor.AppKit::SymbolicTraits
+public typealias LineBreak = AppKit::NSLineBreakMode
+public enum Kerning {
+  case point(CoreFoundation::CGFloat)
+  case adobe(CoreFoundation::CGFloat)
+  public func kerning(for font: AttributedStrings::Font?) -> CoreFoundation::CGFloat
+}
+public enum Ligatures : Swift::Int {
+  case disabled
+  case defaults
+  case all
+  @inlinable public init?(rawValue: Swift::Int)
+  public typealias RawValue = Swift::Int
+  public var rawValue: Swift::Int {
+    @inlinable get
+  }
+}
+public enum HeadingLevel : Swift::Int {
+  case none
+  case one
+  case two
+  case three
+  case four
+  case five
+  case six
+  @inlinable public init?(rawValue: Swift::Int)
+  public typealias RawValue = Swift::Int
+  public var rawValue: Swift::Int {
+    @inlinable get
+  }
+}
+public struct TraitVariant : Swift::OptionSet {
+  public var rawValue: Swift::Int
+  @_hasInitialValue public static let italic: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let bold: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let expanded: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let condensed: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let vertical: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let uiOptimized: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let tightLineSpacing: AttributedStrings::TraitVariant
+  @_hasInitialValue public static let looseLineSpacing: AttributedStrings::TraitVariant
+  public init(rawValue: Swift::Int)
+  public typealias ArrayLiteralElement = AttributedStrings::TraitVariant
+  public typealias Element = AttributedStrings::TraitVariant
+  public typealias RawValue = Swift::Int
+}
+public protocol FontConvertible {
+  func font(size: CoreFoundation::CGFloat?) -> AttributedStrings::Font
+}
+extension AppKit::NSFont : AttributedStrings::FontConvertible {
+  public func font(size: CoreFoundation::CGFloat?) -> AttributedStrings::Font
+}
+extension Swift::String : AttributedStrings::FontConvertible {
+  public func font(size: CoreFoundation::CGFloat?) -> AttributedStrings::Font
+}
+public struct FontData {
+  @_hasStorage @_hasInitialValue internal var font: (any AttributedStrings::FontConvertible)? {
+  }
+  @_hasStorage @_hasInitialValue internal var size: CoreFoundation::CGFloat? {
+  }
+  @_hasStorage @_hasInitialValue internal var numberCase: AttributedStrings::NumberCase? {
+  }
+  @_hasStorage @_hasInitialValue internal var numberSpacing: AttributedStrings::NumberSpacing? {
+  }
+  @_hasStorage @_hasInitialValue internal var fractions: AttributedStrings::Fractions? {
+  }
+  @_hasStorage @_hasInitialValue internal var superscript: Swift::Bool? {
+  }
+  @_hasStorage @_hasInitialValue internal var `subscript`: Swift::Bool? {
+  }
+  @_hasStorage @_hasInitialValue internal var ordinals: Swift::Bool? {
+  }
+  @_hasStorage @_hasInitialValue internal var scientificInferiors: Swift::Bool? {
+  }
+  @_hasStorage @_hasInitialValue internal var smallCaps: Swift::Set<AttributedStrings::SmallCaps> {
+  }
+  @_hasStorage @_hasInitialValue internal var stylisticAlternates: AttributedStrings::StylisticAlternates {
+  }
+  @_hasStorage @_hasInitialValue internal var contextualAlternates: AttributedStrings::ContextualAlternates {
+  }
+  @_hasStorage @_hasInitialValue internal var traitVariants: AttributedStrings::TraitVariant? {
+  }
+  @_hasStorage @_hasInitialValue internal var kerning: AttributedStrings::Kerning? {
+  }
+  @_hasInitialValue weak internal var style: AttributedStrings::Style?
+  public func attributes(currentFont: (any AttributedStrings::FontConvertible)?, size currentSize: CoreFoundation::CGFloat?) -> [Foundation::NSAttributedString.Foundation::Key : Any]
+}
+public protocol FontInfoAttribute {
+  func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+}
+extension AttributedStrings::FontInfoAttribute {
+  public func attributes() -> [[AttributedStrings::FontDescriptor.AppKit::FeatureKey : Any]]
+}
+public enum NumberCase : AttributedStrings::FontInfoAttribute {
+  case upper
+  case lower
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+  @_semantics("derived_enum_equals") @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_enum_equals(_ a: AttributedStrings::NumberCase, _ b: AttributedStrings::NumberCase) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum NumberSpacing : AttributedStrings::FontInfoAttribute {
+  case monospaced
+  case proportional
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+  @_semantics("derived_enum_equals") @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_enum_equals(_ a: AttributedStrings::NumberSpacing, _ b: AttributedStrings::NumberSpacing) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum Fractions : AttributedStrings::FontInfoAttribute {
+  case disabled
+  case diagonal
+  case vertical
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+  @_semantics("derived_enum_equals") @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_enum_equals(_ a: AttributedStrings::Fractions, _ b: AttributedStrings::Fractions) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public enum SmallCaps : AttributedStrings::FontInfoAttribute {
+  case disabled
+  case fromUppercase
+  case fromLowercase
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+  @_semantics("derived_enum_equals") @_implements(Swift::Equatable, ==(_:_:)) public static func __derived_enum_equals(_ a: AttributedStrings::SmallCaps, _ b: AttributedStrings::SmallCaps) -> Swift::Bool
+  public func hash(into hasher: inout Swift::Hasher)
+  public var hashValue: Swift::Int {
+    get
+  }
+}
+public struct StylisticAlternates {
+  @_hasInitialValue internal var one: Swift::Bool?
+  @_hasInitialValue internal var two: Swift::Bool?
+  @_hasInitialValue internal var three: Swift::Bool?
+  @_hasInitialValue internal var four: Swift::Bool?
+  @_hasInitialValue internal var five: Swift::Bool?
+  @_hasInitialValue internal var six: Swift::Bool?
+  @_hasInitialValue internal var seven: Swift::Bool?
+  @_hasInitialValue internal var eight: Swift::Bool?
+  @_hasInitialValue internal var nine: Swift::Bool?
+  @_hasInitialValue internal var ten: Swift::Bool?
+  @_hasInitialValue internal var eleven: Swift::Bool?
+  @_hasInitialValue internal var twelve: Swift::Bool?
+  @_hasInitialValue internal var thirteen: Swift::Bool?
+  @_hasInitialValue internal var fourteen: Swift::Bool?
+  @_hasInitialValue internal var fifteen: Swift::Bool?
+  @_hasInitialValue internal var sixteen: Swift::Bool?
+  @_hasInitialValue internal var seventeen: Swift::Bool?
+  @_hasInitialValue internal var eighteen: Swift::Bool?
+  @_hasInitialValue internal var nineteen: Swift::Bool?
+  @_hasInitialValue internal var twenty: Swift::Bool?
+  public init()
+}
+extension AttributedStrings::StylisticAlternates {
+  public static func one(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func two(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func three(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func four(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func five(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func six(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func seven(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func eight(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func nine(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func ten(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func eleven(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func twelve(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func thirteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func fourteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func fifteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func sixteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func seventeen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func eighteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func nineteen(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+  public static func twenty(on isOn: Swift::Bool) -> AttributedStrings::StylisticAlternates
+}
+extension AttributedStrings::StylisticAlternates {
+  public mutating func add(other theOther: AttributedStrings::StylisticAlternates)
+  public func byAdding(other theOther: AttributedStrings::StylisticAlternates) -> AttributedStrings::StylisticAlternates
+}
+extension AttributedStrings::StylisticAlternates : AttributedStrings::FontInfoAttribute {
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+}
+public func + (lhs: AttributedStrings::StylisticAlternates, rhs: AttributedStrings::StylisticAlternates) -> AttributedStrings::StylisticAlternates
+public struct ContextualAlternates {
+  @_hasInitialValue internal var contextualAlternates: Swift::Bool?
+  @_hasInitialValue internal var swashAlternates: Swift::Bool?
+  @_hasInitialValue internal var contextualSwashAlternates: Swift::Bool?
+  public init()
+}
+extension AttributedStrings::ContextualAlternates {
+  public static func contextualAlternates(on isOn: Swift::Bool) -> AttributedStrings::ContextualAlternates
+  public static func swashAlternates(on isOn: Swift::Bool) -> AttributedStrings::ContextualAlternates
+  public static func contextualSwashAlternates(on isOn: Swift::Bool) -> AttributedStrings::ContextualAlternates
+}
+extension AttributedStrings::ContextualAlternates {
+  public mutating func add(other theOther: AttributedStrings::ContextualAlternates)
+  public func byAdding(other theOther: AttributedStrings::ContextualAlternates) -> AttributedStrings::ContextualAlternates
+}
+extension AttributedStrings::ContextualAlternates : AttributedStrings::FontInfoAttribute {
+  public func featureSettings() -> [(type: Swift::Int, selector: Swift::Int)]
+}
+public func + (lhs: AttributedStrings::ContextualAlternates, rhs: AttributedStrings::ContextualAlternates) -> AttributedStrings::ContextualAlternates
+public enum TextTransform {
+  public typealias TransformFunction = (Swift::String) -> Swift::String
+  case lowercase
+  case uppercase
+  case capitalized
+  case lowercaseWithLocale(Foundation::Locale)
+  case uppercaseWithLocale(Foundation::Locale)
+  case capitalizedWithLocale(Foundation::Locale)
+  case custom(AttributedStrings::TextTransform.AttributedStrings::TransformFunction)
+}
+public protocol URLRepresentable {
+  var url: Foundation::URL { get }
+}
+extension Foundation::URL : AttributedStrings::URLRepresentable {
+  public var url: Foundation::URL {
+    get
+  }
+  public init?(string: Swift::String?)
+}
+extension Foundation::NSMutableAttributedString {
+  convenience public init?(imageNamed: Swift::String?, bounds: Swift::String? = nil)
+  convenience public init?(image: AttributedStrings::Image?, bounds: Swift::String? = nil)
+}
+extension Foundation::NSMutableAttributedString {
+  @discardableResult
+  public func add(style: Swift::String, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func add(styles: [Swift::String], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func set(style: Swift::String, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func set(styles: [Swift::String], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func add(style: any AttributedStrings::StyleProtocol, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func add(styles: [any AttributedStrings::StyleProtocol], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func set(style: any AttributedStrings::StyleProtocol, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func set(styles: [any AttributedStrings::StyleProtocol], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func removeAttributes(_ keys: [Foundation::NSAttributedString.Foundation::Key], range: Foundation::NSRange) -> Self
+  public func remove(_ style: any AttributedStrings::StyleProtocol) -> Self
+}
+public func + (lhs: AttributedStrings::AttributedString, rhs: AttributedStrings::AttributedString) -> AttributedStrings::AttributedString
+public func + (lhs: Swift::String, rhs: AttributedStrings::AttributedString) -> AttributedStrings::AttributedString
+public func + (lhs: AttributedStrings::AttributedString, rhs: Swift::String) -> AttributedStrings::AttributedString
+@_hasMissingDesignatedInitializers @_functionBuilder public class AttributedStringBuilder {
+  public static func buildBlock(_ components: AttributedStrings::AttributedString...) -> AttributedStrings::AttributedString
+  @objc deinit
+}
+extension Foundation::NSMutableAttributedString {
+  public class func composing(@AttributedStrings::AttributedStringBuilder _ parts: () -> AttributedStrings::AttributedString) -> AttributedStrings::AttributedString
+}
+extension Swift::String {
+  public func set(style: Swift::String, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString?
+  public func set(styles: [Swift::String], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString?
+  public func set(style: any AttributedStrings::StyleProtocol, range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+  public func set(styles: [any AttributedStrings::StyleProtocol], range: Foundation::NSRange? = nil) -> AttributedStrings::AttributedString
+}
+public func + (lhs: Swift::String, rhs: any AttributedStrings::StyleProtocol) -> AttributedStrings::AttributedString
+extension Foundation::_NSRange {
+  public func `in`(_ str: Swift::String) -> Swift::Range<Swift::String.Swift::Index>?
+}
+extension Swift::String {
+  public func rangeFrom(nsRange: Foundation::NSRange) -> Swift::Range<Swift::String.Swift::Index>?
+  public func substring(from: Swift::Int?, length: Swift::Int) -> Swift::String?
+  public subscript(index: Swift::Int) -> Swift::Character? {
+    get
+  }
+  public subscript(range: Swift::Range<Swift::Int>) -> Swift::Substring? {
+    get
+  }
+  public subscript(value: Swift::PartialRangeUpTo<Swift::Int>) -> Swift::Substring? {
+    get
+  }
+  public subscript(range: Swift::ClosedRange<Swift::Int>) -> Swift::Substring? {
+    get
+  }
+  public subscript(value: Swift::PartialRangeFrom<Swift::Int>) -> Swift::Substring? {
+    get
+  }
+  public subscript(value: Swift::PartialRangeThrough<Swift::Int>) -> Swift::Substring? {
+    get
+  }
+  public func removing(prefix: Swift::String) -> Swift::String
+  public func removing(suffix: Swift::String) -> Swift::String
+}
+extension Swift::Substring {
+  public var string: Swift::String {
+    get
+  }
+}
+public class Style : AttributedStrings::StyleProtocol {
+  public typealias StyleInitHandler = (AttributedStrings::Style) -> Swift::Void
+  @_hasInitialValue public var fontData: AttributedStrings::FontData?
+  @_hasInitialValue private var innerAttributes: [Foundation::NSAttributedString.Foundation::Key : Any]
+  @_hasInitialValue private var cachedAttributes: [Foundation::NSAttributedString.Foundation::Key : Any]?
+  @_hasInitialValue public var textTransforms: [AttributedStrings::TextTransform]?
+  public var size: CoreFoundation::CGFloat? {
+    get
+    set
+  }
+  public var font: (any AttributedStrings::FontConvertible)? {
+    get
+    set
+  }
+  public var color: (any AttributedStrings::ColorConvertible)? {
+    get
+    set
+  }
+  public var backColor: (any AttributedStrings::ColorConvertible)? {
+    get
+    set
+  }
+  public var underline: (style: AppKit::NSUnderlineStyle?, color: (any AttributedStrings::ColorConvertible)?)? {
+    get
+    set
+  }
+  public var stroke: (color: (any AttributedStrings::ColorConvertible)?, width: Swift::Float?)? {
+    get
+    set
+  }
+  public var strikethrough: (style: AppKit::NSUnderlineStyle?, color: (any AttributedStrings::ColorConvertible)?)? {
+    get
+    set
+  }
+  public var baselineOffset: Swift::Float? {
+    get
+    set
+  }
+  public var paragraph: AppKit::NSMutableParagraphStyle {
+    get
+    set
+  }
+  public var lineSpacing: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var paragraphSpacingBefore: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var paragraphSpacingAfter: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var alignment: AppKit::NSTextAlignment {
+    get
+    set
+  }
+  public var firstLineHeadIndent: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var headIndent: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var tailIndent: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var lineBreakMode: AttributedStrings::LineBreak {
+    get
+    set
+  }
+  public var minimumLineHeight: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var maximumLineHeight: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var baseWritingDirection: AppKit::NSWritingDirection {
+    get
+    set
+  }
+  public var lineHeightMultiple: CoreFoundation::CGFloat {
+    get
+    set
+  }
+  public var hyphenationFactor: Swift::Float {
+    get
+    set
+  }
+  public var ligatures: AttributedStrings::Ligatures? {
+    get
+    set
+  }
+  public var shadow: AppKit::NSShadow? {
+    get
+    set
+  }
+  public var linkURL: (any AttributedStrings::URLRepresentable)? {
+    get
+    set
+  }
+  public var numberCase: AttributedStrings::NumberCase? {
+    get
+    set
+  }
+  public var numberSpacing: AttributedStrings::NumberSpacing? {
+    get
+    set
+  }
+  public var fractions: AttributedStrings::Fractions? {
+    get
+    set
+  }
+  public var superscript: Swift::Bool? {
+    get
+    set
+  }
+  public var `subscript`: Swift::Bool? {
+    get
+    set
+  }
+  public var ordinals: Swift::Bool? {
+    get
+    set
+  }
+  public var scientificInferiors: Swift::Bool? {
+    get
+    set
+  }
+  public var smallCaps: Swift::Set<AttributedStrings::SmallCaps> {
+    get
+    set
+  }
+  public var stylisticAlternates: AttributedStrings::StylisticAlternates {
+    get
+    set
+  }
+  public var contextualAlternates: AttributedStrings::ContextualAlternates {
+    get
+    set
+  }
+  public var kerning: AttributedStrings::Kerning? {
+    get
+    set
+  }
+  public var traitVariants: AttributedStrings::TraitVariant? {
+    get
+    set
+  }
+  public init(_ handler: AttributedStrings::Style.AttributedStrings::StyleInitHandler? = nil)
+  public init(dictionary: [Foundation::NSAttributedString.Foundation::Key : Any]?, textTransforms: [AttributedStrings::TextTransform]? = nil)
+  public init(style: AttributedStrings::Style)
+  public func set<T>(attribute value: T?, forKey key: Foundation::NSAttributedString.Foundation::Key)
+  public func get<T>(attributeForKey key: Foundation::NSAttributedString.Foundation::Key) -> T?
+  public var attributes: [Foundation::NSAttributedString.Foundation::Key : Any] {
+    get
+  }
+  public func byAdding(_ handler: AttributedStrings::Style.AttributedStrings::StyleInitHandler) -> AttributedStrings::Style
+  @objc deinit
+}
+public typealias StyleGroup = AttributedStrings::StyleXML
+public class StyleXML : AttributedStrings::StyleProtocol {
+  @_hasInitialValue public var attributes: [Foundation::NSAttributedString.Foundation::Key : Any]
+  @_hasInitialValue public var fontData: AttributedStrings::FontData?
+  @_hasInitialValue public var textTransforms: [AttributedStrings::TextTransform]?
+  @_hasStorage public var styles: [Swift::String : any AttributedStrings::StyleProtocol] {
+    get
+  }
+  @_hasInitialValue public var baseStyle: (any AttributedStrings::StyleProtocol)?
+  @_hasInitialValue public var xmlParsingOptions: AttributedStrings::XMLParsingOptions
+  @_hasInitialValue public var imageProvider: ((_ name: Swift::String, _ attributes: [Swift::String : Swift::String]?) -> AttributedStrings::Image?)?
+  @_hasInitialValue public var xmlAttributesResolver: any AttributedStrings::XMLDynamicAttributesResolver
+  public init(base: (any AttributedStrings::StyleProtocol)? = nil, _ styles: [Swift::String : any AttributedStrings::StyleProtocol] = [:])
+  public func add(style: AttributedStrings::Style, as name: Swift::String)
+  @discardableResult
+  public func remove(style name: Swift::String) -> (any AttributedStrings::StyleProtocol)?
+  public func set(to source: Swift::String, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func add(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func set(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func apply(to attrStr: AttributedStrings::AttributedString, adding: Swift::Bool, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @objc deinit
+}
+public typealias AttributedString = Foundation::NSMutableAttributedString
+public protocol StyleProtocol : AnyObject {
+  var attributes: [Foundation::NSAttributedString.Foundation::Key : Any] { get }
+  var fontData: AttributedStrings::FontData? { get }
+  var textTransforms: [AttributedStrings::TextTransform]? { get }
+  func set(to source: Swift::String, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  func add(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @discardableResult
+  func set(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @discardableResult
+  func remove(from source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+}
+extension AttributedStrings::StyleProtocol {
+  public func set(to source: Swift::String, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func add(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func set(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @discardableResult
+  public func remove(from source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+}
+public class StyleRegEx : AttributedStrings::StyleProtocol {
+  @_hasStorage public var regex: Foundation::NSRegularExpression {
+    get
+  }
+  @_hasStorage @_hasInitialValue public var baseStyle: (any AttributedStrings::StyleProtocol)? {
+    get
+  }
+  private var style: any AttributedStrings::StyleProtocol
+  public var attributes: [Foundation::NSAttributedString.Foundation::Key : Any] {
+    get
+  }
+  @_hasInitialValue public var textTransforms: [AttributedStrings::TextTransform]?
+  public var fontData: AttributedStrings::FontData? {
+    get
+  }
+  public init?(base: (any AttributedStrings::StyleProtocol)? = nil, pattern: Swift::String, options: Foundation::NSRegularExpression.Foundation::Options = .caseInsensitive, handler: @escaping AttributedStrings::Style.AttributedStrings::StyleInitHandler)
+  public func set(to source: Swift::String, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func add(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  public func set(to source: AttributedStrings::AttributedString, range: Foundation::NSRange?) -> AttributedStrings::AttributedString
+  @objc deinit
+}
+@_hasInitialValue public let Styles: AttributedStrings::StylesManager
+@_hasMissingDesignatedInitializers public class StylesManager {
+  @_hasInitialValue public static let shared: AttributedStrings::StylesManager
+  @_hasInitialValue public var onDeferStyle: ((Swift::String) -> ((any AttributedStrings::StyleProtocol)?, Swift::Bool))?
+  @_hasStorage @_hasInitialValue public var styles: [Swift::String : any AttributedStrings::StyleProtocol] {
+    get
+  }
+  public func register(_ name: Swift::String, style: any AttributedStrings::StyleProtocol)
+  public subscript(name: Swift::String?) -> (any AttributedStrings::StyleProtocol)? {
+    get
+  }
+  public subscript(names: [Swift::String]?) -> [any AttributedStrings::StyleProtocol]? {
+    get
+  }
+  @objc deinit
+}
+extension Swift::String {
+  public func escapeWithUnicodeEntities() -> Swift::String
+}
+extension Swift::Array where Element == any AttributedStrings::StyleProtocol {
+  public func mergeStyle() -> AttributedStrings::Style
+}
+extension AppKit::NSImage {
+  public func pngData() -> Foundation::Data?
+}
+public struct OrderedDictionary<K, V> where K : Swift::Hashable {
+  @_hasInitialValue internal var keys: [K]
+  @_hasInitialValue internal var dict: [K : V]
+  public var count: Swift::Int {
+    get
+  }
+  public subscript(key: K) -> V? {
+    get
+    set(newValue)
+  }
+  public mutating func remove(key: K) -> V?
+}
+extension AttributedStrings::OrderedDictionary : Swift::Sequence {
+  public func makeIterator() -> Swift::AnyIterator<V>
+  public typealias Element = V
+  public typealias Iterator = Swift::AnyIterator<V>
+}
+extension AttributedStrings::OrderedDictionary : Swift::CustomStringConvertible {
+  public var description: Swift::String {
+    get
+  }
+}
+extension AttributedStrings::OrderedDictionary : Swift::ExpressibleByDictionaryLiteral {
+  public init(dictionaryLiteral elements: (K, V)...)
+  public typealias Key = K
+  public typealias Value = V
+}
+public protocol XMLDynamicAttributesResolver {
+  func image(name: Swift::String, attributes: [Swift::String : Swift::String]?, fromStyle style: AttributedStrings::StyleXML) -> AttributedStrings::Image?
+  func applyDynamicAttributes(to attributedString: inout AttributedStrings::AttributedString, xmlStyle: AttributedStrings::XMLDynamicStyle, fromStyle: AttributedStrings::StyleXML)
+  func styleForUnknownXMLTag(_ tag: Swift::String, to attributedString: inout AttributedStrings::AttributedString, attributes: [Swift::String : Swift::String]?, fromStyle: AttributedStrings::StyleXML)
+}
+extension AttributedStrings::XMLDynamicAttributesResolver {
+  public func image(name: Swift::String, attributes: [Swift::String : Swift::String]?, fromStyle style: AttributedStrings::StyleXML) -> AttributedStrings::Image?
+}
+open class StandardXMLAttributesResolver : AttributedStrings::XMLDynamicAttributesResolver {
+  public init()
+  open func applyDynamicAttributes(to attributedString: inout AttributedStrings::AttributedString, xmlStyle: AttributedStrings::XMLDynamicStyle, fromStyle: AttributedStrings::StyleXML)
+  open func styleForUnknownXMLTag(_ tag: Swift::String, to attributedString: inout AttributedStrings::AttributedString, attributes: [Swift::String : Swift::String]?, fromStyle: AttributedStrings::StyleXML)
+  @objc deinit
+}
+public struct XMLStringBuilderError : Swift::Error {
+  public let parserError: any Swift::Error
+  public let line: Swift::Int
+  public let column: Swift::Int
+}
+public struct XMLParsingOptions : Swift::OptionSet {
+  public let rawValue: Swift::Int
+  public init(rawValue: Swift::Int)
+  @_hasInitialValue public static let doNotWrapXML: AttributedStrings::XMLParsingOptions
+  @_hasInitialValue public static let escapeString: AttributedStrings::XMLParsingOptions
+  public typealias ArrayLiteralElement = AttributedStrings::XMLParsingOptions
+  public typealias Element = AttributedStrings::XMLParsingOptions
+  public typealias RawValue = Swift::Int
+}
+@objc public class XMLStringBuilder : ObjectiveC::NSObject, Foundation::XMLParserDelegate {
+  private var xmlParser: Foundation::XMLParser
+  private var attributedString: AttributedStrings::AttributedString
+  @_hasInitialValue private var xmlStylers: [AttributedStrings::XMLDynamicStyle]
+  public var xmlAttributesResolver: any AttributedStrings::XMLDynamicAttributesResolver {
+    get
+  }
+  @_hasInitialValue internal var currentString: Swift::String?
+  @_hasInitialValue weak private var styleXML: AttributedStrings::StyleXML!
+  public init(styleXML: AttributedStrings::StyleXML, string: Swift::String)
+  public func parse() throws -> AttributedStrings::AttributedString
+  @objc public func parser(_ parser: Foundation::XMLParser, didStartElement elementName: Swift::String, namespaceURI: Swift::String?, qualifiedName qName: Swift::String?, attributes attributeDict: [Swift::String : Swift::String])
+  @objc public func parser(_ parser: Foundation::XMLParser, didEndElement elementName: Swift::String, namespaceURI: Swift::String?, qualifiedName qName: Swift::String?)
+  @objc public func parser(_ parser: Foundation::XMLParser, foundCharacters string: Swift::String)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class XMLDynamicStyle {
+  final public let tag: Swift::String
+  final public let style: (any AttributedStrings::StyleProtocol)?
+  final public let xmlAttributes: [Swift::String : Swift::String]?
+  public func enumerateAttributes(_ handler: (_ key: Swift::String, _ value: Swift::String) -> Swift::Void)
+  @objc deinit
+}
+extension AttributedStrings::Ligatures : Swift::Equatable {}
+extension AttributedStrings::Ligatures : Swift::Hashable {}
+extension AttributedStrings::Ligatures : Swift::RawRepresentable {}
+extension AttributedStrings::HeadingLevel : Swift::Equatable {}
+extension AttributedStrings::HeadingLevel : Swift::Hashable {}
+extension AttributedStrings::HeadingLevel : Swift::RawRepresentable {}
+extension AttributedStrings::NumberCase : Swift::Equatable {}
+extension AttributedStrings::NumberCase : Swift::Hashable {}
+extension AttributedStrings::NumberSpacing : Swift::Equatable {}
+extension AttributedStrings::NumberSpacing : Swift::Hashable {}
+extension AttributedStrings::Fractions : Swift::Equatable {}
+extension AttributedStrings::Fractions : Swift::Hashable {}
+extension AttributedStrings::SmallCaps : Swift::Equatable {}
+extension AttributedStrings::SmallCaps : Swift::Hashable {}
